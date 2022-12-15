@@ -5,6 +5,7 @@ import com.afs.todolist.controller.dto.TodoUpdateRequest;
 import com.afs.todolist.controller.mapper.TodoMapper;
 import com.afs.todolist.entity.Todo;
 import com.afs.todolist.service.TodoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,20 +24,27 @@ public class TodoController {
 
     @GetMapping
 //    @CrossOrigin(origins = {"http://localhost:3000"})
-    List<Todo> getAll() {
+    public List<Todo> getAll() {
         return todoService.findAll();
     }
 
     @PostMapping
-    Todo createTodo(@RequestBody TodoCreateRequest todoCreateRequest){
+    public Todo createTodo(@RequestBody TodoCreateRequest todoCreateRequest){
         Todo todo = todoMapper.toEntity(todoCreateRequest);
         return todoService.createTodo(todo);
     }
 
     @PutMapping("/{id}")
-    Todo updateTodo(@PathVariable String id, @RequestBody TodoUpdateRequest todoUpdateRequest){
+    public Todo updateTodo(@PathVariable String id, @RequestBody TodoUpdateRequest todoUpdateRequest){
         Todo todo = todoMapper.toEntity(todoUpdateRequest);
         return todoService.updateTodo(id, todo);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTodo(@PathVariable String id){
+        todoService.deleteTodo(id);
+    }
+
 
 }
