@@ -28,11 +28,7 @@ public class TodoService {
     }
 
     public Todo findById(String id){
-        Todo todo = todoRepository.findById(id).get();
-        if(todo == null) {
-            throw new TodoNotFoundException(id);
-        }
-        return todo;
+        return todoRepository.findById(id).orElseThrow(() -> new TodoNotFoundException(id));
     }
 
     private void validateObjectId(String id){
