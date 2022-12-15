@@ -21,6 +21,11 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
+    public Todo createTodo(Todo todo) {
+        todo.setDone(false);
+        return todoRepository.save(todo);
+    }
+
     private void validateObjectId(String id){
         if(!ObjectId.isValid(id)){
             throw new InvalidIdException(id);
