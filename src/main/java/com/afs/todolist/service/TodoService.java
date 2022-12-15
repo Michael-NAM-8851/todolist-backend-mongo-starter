@@ -31,4 +31,10 @@ public class TodoService {
             throw new InvalidIdException(id);
         }
     }
+
+    public Todo updateTodo(String id, Todo todo) {
+        validateObjectId(id);
+        todo.setId(id);
+        return todoRepository.save(todo);
+    }
 }
